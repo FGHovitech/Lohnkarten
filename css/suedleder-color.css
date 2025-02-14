@@ -1,0 +1,65 @@
+body{
+    color: #153A2A;
+}
+header {
+    background-color: #153A2A;
+    color: #ffffff;
+  }
+
+  
+.logo{
+    padding: 0px 10px 0px 10px;
+    height: 80px;
+}
+
+.btn-primary{   
+    background-color: #153A2A; 
+}
+
+header .nav {
+    margin-right: 10px;
+    align-items: center;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    background-color: #BFCF28;
+    color: #153A2A;
+}
+
+body {
+    background-color: #f0f0f0; 
+}
+  
+.container {
+    background-color: #f0f0f0; 
+}
+
+.fs-4{
+    color: #ffffff;
+}
+
+.fixed-label {
+    height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+ 
+.col-1 {
+    min-width: 80px;
+}
+
+.col-3 {
+    min-width: 240px;
+}
+
+
+/* Für Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

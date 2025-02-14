@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eingabemaske</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/suedleder-color.css">
+  <link rel="stylesheet" href="./css/eingabemaske.css">
+  <!-- Doppelte Einbindung der CSS-Datei entfernt -->
+  <script defer src="./js/jquery.min.js"></script>
+  <script defer src="./js/bootstrap.bundle.min.js"></script>
+  <script defer src="./js/eingabemaske.js"></script>
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <!-- Header (Seitenkopf) -->
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/eingabemaske.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img class="logo" src="./pictures/Suedleder_Logo.svg" alt="Südleder Logo">
+        <span class="fs-4">Akkordarbeit</span>
+      </a>
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+      </ul>
+    </header>
+  </div>
+
+  <!-- Hauptinhalt -->
+  <main class="container flex-grow-1">
+    <form>
+      <!-- Globaler Header: Spaltenüberschriften jeweils zentriert -->
+      <div class="eingabemaske-global-header d-flex">
+        <div style="flex:2; text-align: center;">Mitarbeiter</div>
+        <div style="flex:1; text-align: center;">Kostenstelle</div>
+        <div style="flex:3; text-align: center;">Arbeitsvorgang</div>
+        <div style="flex:1; text-align: center;">Gewichtsklasse</div>
+        <div style="flex:1; text-align: center;">Stückzahl</div>
+        <div style="flex:1; text-align: center;">VGZ</div>
+        <div style="flex:1; text-align: center;">Gebr. Min.</div>
+        <div style="flex:1; text-align: center;">Std. Zuschlag</div>
+      </div>
+      
+      <!-- Container für alle dynamischen Eingabemasken -->
+      <div id="eingabemaske-container">
+        <!-- Erste Eingabemaske (Template für neue Zeilen) -->
+        <div class="eingabemaske-row border rounded p-2" style="background-color: #f8f9fa;">
+          <!-- Mitarbeiterspalte -->
+          <div class="employee-container" style="flex:2;">
+            <select name="mitarbeiter[]" class="form-select" data-live-search="true" title="Mitarbeiter wählen">
+              <option value="1">(5111) Peter Lustig</option>
+              <option value="2">(5120) Max Mustermann</option>
+              <option value="3">(5153) Marco Polo</option>
+            </select>
+          </div>
+          <!-- Innerer Container (alle Felder ab Kostenstelle) -->
+          <div class="inner-container" style="flex:10;">
+            <!-- Wrapper für innere Abschnitte -->
+            <div class="inner-section-wrapper">
+              <!-- Erster innerer Abschnitt -->
+              <div class="eingabemaske-abschnitt">
+                <div class="d-flex w-100 gap-1">
+                  <!-- Kostenstelle -->
+                  <div style="flex:1;">
+                    <select name="kostenstelle[]" class="form-select" data-live-search="true" title="Kostenstelle wählen">
+                      <option value="1">310</option>
+                      <option value="2">305</option>
+                      <option value="3">303</option>
+                    </select>
+                  </div>
+                  <!-- Arbeitsvorgang -->
+                  <div style="flex:3;">
+                    <div class="arbeitsvorgang-group">
+                      <div class="input-group mb-1 arbeitsvorgang-row">
+                        <select name="arbeitsvorgang_select[]" class="form-select" data-live-search="true" title="Arbeitsvorgang wählen">
+                          <option value="1">Vorgang 1</option>
+                          <option value="2">Vorgang 2</option>
+                        </select>
+                        <input type="number" name="arbeitsvorgang_number[]" class="form-control" placeholder="Minuten">
+                      </div>
+                      <div>
+                        <button type="button" class="btn btn-outline-secondary add-arbeitsvorgang">+</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Gewichtsklasse -->
+                  <div style="flex:1;">
+                    <select name="gewichtklasse[]" class="form-select" data-live-search="true" title="Gewichtsklasse wählen">
+                      <option value="">Bitte wählen</option>
+                      <option value="1">Gewichtsklasse 1</option>
+                      <option value="2">Gewichtsklasse 2</option>
+                      <option value="3">Gewichtsklasse 3</option>
+                    </select>
+                  </div>
+                  <!-- Stückzahl -->
+                  <div style="flex:1;">
+                    <input type="number" name="stueckzahl[]" class="form-control">
+                  </div>
+                  <!-- Vorgabezeit -->
+                  <div style="flex:1;">
+                    <input type="text" name="vorgabezeit[]" class="form-control">
+                  </div>
+                  <!-- Gebrauchte Minuten -->
+                  <div style="flex:1;">
+                    <input type="number" name="gebrauchteMinuten[]" class="form-control">
+                  </div>
+                  <!-- Stundenzuschlag -->
+                  <div style="flex:1;">
+                    <select name="stundenzuschlag[]" class="form-select" data-live-search="true" title="Stundenzuschlag wählen">
+                      <option value="">0%</option>
+                      <option value="1">10%</option>
+                      <option value="2">25%</option>
+                      <option value="3">40%</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Button für einen neuen inneren Abschnitt -->
+            <div class="inner-section-button">
+              <button type="button" class="btn btn-outline-secondary add-inner-section">Neuer Abschnitt</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Gesamt-Plus-Button: Dieser Button wird immer unter der letzten Zeile angezeigt -->
+      <div class="mt-2">
+        <button type="button" class="btn btn-outline-secondary add-eingabemaske">Neuer Mitarbeiter</button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer class="container mt-auto">
+    <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <div class="col-md-4 d-flex align-items-center">
+        <span class="mb-3 mb-md-0 text-body-secondary">© 2025 Südleder</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

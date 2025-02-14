@@ -1,0 +1,31 @@
+/* eingabemaske.css */
+
+/* Globaler Header mit den Spaltenüberschriften */
+.eingabemaske-global-header {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Äußere Zeile (gesamter Eingabeblock) */
+  .eingabemaske-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    align-items: stretch;
+  }
+  
+  /* Innerer Abschnitt – dunkler Hintergrund mit etwas Padding */
+  .eingabemaske-abschnitt {
+    background-color: #e0e0e0;
+    margin-bottom: 0.5rem;
+    padding: 0.3rem;
+    border-radius: 4px;
+  }
+  
+  /* Der Button zum Hinzufügen eines neuen inneren Abschnitts */
+  .inner-section-button {
+    text-align: left;
+    margin-top: 0.5rem;
+  }
+  
