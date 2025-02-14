@@ -14,7 +14,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
   <!-- Header (Seitenkopf) -->
-  <div class="container">
+  <div class="container-fluid">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <a href="/eingabemaske.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <img class="logo" src="./pictures/Suedleder_Logo.svg" alt="Südleder Logo">
@@ -27,7 +27,7 @@
   </div>
 
   <!-- Hauptinhalt -->
-  <main class="container flex-grow-1">
+  <main class="container-fluid flex-grow-1">
     <form>
       <!-- Globaler Header: Spaltenüberschriften jeweils zentriert -->
       <div class="eingabemaske-global-header d-flex">
@@ -47,12 +47,43 @@
         <div class="eingabemaske-row border rounded p-2" style="background-color: #f8f9fa;">
           <!-- Mitarbeiterspalte -->
           <div class="employee-container" style="flex:2;">
-            <select name="mitarbeiter[]" class="form-select" data-live-search="true" title="Mitarbeiter wählen">
-              <option value="1">(5111) Peter Lustig</option>
-              <option value="2">(5120) Max Mustermann</option>
-              <option value="3">(5153) Marco Polo</option>
-            </select>
+            <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow w-280px" data-bs-theme="light">
+              <form class="p-2 mb-2 bg-body-tertiary border-bottom">
+                <input type="search" class="form-control" autocomplete="off" placeholder="Type to filter...">
+              </form>
+              <!-- Absolut positionierte Ergebnisliste, die den Container nicht vergrößert -->
+              <ul class="list-unstyled mb-0" style="
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    display: none;
+                    z-index: 1050;
+                    background-color: #fff;
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    ">
+                <li>
+                  <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
+                    <span class="d-inline-block bg-success rounded-circle p-1"></span>
+                    (5111) Peter Lustig
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
+                    <span class="d-inline-block bg-primary rounded-circle p-1"></span>
+                    (5120) Max Mustermann
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
+                    <span class="d-inline-block bg-danger rounded-circle p-1"></span>
+                    (5153) Marco Polo
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
+          
           <!-- Innerer Container (alle Felder ab Kostenstelle) -->
           <div class="inner-container" style="flex:10;">
             <!-- Wrapper für innere Abschnitte -->
@@ -62,20 +93,42 @@
                 <div class="d-flex w-100 gap-1">
                   <!-- Kostenstelle -->
                   <div style="flex:1;">
-                    <select name="kostenstelle[]" class="form-select" data-live-search="true" title="Kostenstelle wählen">
-                      <option value="1">310</option>
-                      <option value="2">305</option>
-                      <option value="3">303</option>
-                    </select>
+                    <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow w-280px" data-bs-theme="light">
+                      <form class="p-2 mb-2 bg-body-tertiary border-bottom">
+                        <input type="search" class="form-control" autocomplete="off" placeholder="Kostenstelle wählen">
+                      </form>
+                      <ul class="list-unstyled mb-0" style="position: absolute; top: 100%; left: 0; width: 100%; display: none;">
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">310</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">305</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">303</a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
+                  
+                    
                   <!-- Arbeitsvorgang -->
                   <div style="flex:3;">
                     <div class="arbeitsvorgang-group">
                       <div class="input-group mb-1 arbeitsvorgang-row">
-                        <select name="arbeitsvorgang_select[]" class="form-select" data-live-search="true" title="Arbeitsvorgang wählen">
-                          <option value="1">Vorgang 1</option>
-                          <option value="2">Vorgang 2</option>
-                        </select>
+                        <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow w-280px" data-bs-theme="light">
+                          <form class="p-2 mb-2 bg-body-tertiary border-bottom">
+                            <input type="search" class="form-control" autocomplete="off" placeholder="Arbeitsvorgang wählen">
+                          </form>
+                          <ul class="list-unstyled mb-0" style="position: absolute; top: 100%; left: 0; width: 100%; display: none;">
+                            <li>
+                              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Vorgang 1</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Vorgang 2</a>
+                            </li>
+                          </ul>
+                        </div>
                         <input type="number" name="arbeitsvorgang_number[]" class="form-control" placeholder="Minuten">
                       </div>
                       <div>
@@ -83,15 +136,30 @@
                       </div>
                     </div>
                   </div>
+  
                   <!-- Gewichtsklasse -->
                   <div style="flex:1;">
-                    <select name="gewichtklasse[]" class="form-select" data-live-search="true" title="Gewichtsklasse wählen">
-                      <option value="">Bitte wählen</option>
-                      <option value="1">Gewichtsklasse 1</option>
-                      <option value="2">Gewichtsklasse 2</option>
-                      <option value="3">Gewichtsklasse 3</option>
-                    </select>
+                    <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow w-280px" data-bs-theme="light">
+                      <form class="p-2 mb-2 bg-body-tertiary border-bottom">
+                        <input type="search" class="form-control" autocomplete="off" placeholder="Gewichtsklasse wählen">
+                      </form>
+                      <ul class="list-unstyled mb-0" style="position: absolute; top: 100%; left: 0; width: 100%; display: none;">
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Bitte wählen</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Gewichtsklasse 1</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Gewichtsklasse 2</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Gewichtsklasse 3</a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
+                    
                   <!-- Stückzahl -->
                   <div style="flex:1;">
                     <input type="number" name="stueckzahl[]" class="form-control">
