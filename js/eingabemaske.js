@@ -1,8 +1,8 @@
 $(document).ready(function() {
-    // Arbeitsvorgang-Plus-Button: Fügt innerhalb eines inneren Abschnitts eine weitere Arbeitsvorgangszeile hinzu.
-    $(document).on('click', '.add-arbeitsvorgang', function() {
-      var $group = $(this).closest('.arbeitsvorgang-group');
-      var $newRow = $group.find('.arbeitsvorgang-row').first().clone();
+    // Nebenzeiten-Plus-Button: Fügt innerhalb eines inneren Abschnitts eine weitere Nebenzeitenszeile hinzu.
+    $(document).on('click', '.add-nebenzeiten', function() {
+      var $group = $(this).closest('.nebenzeiten-group');
+      var $newRow = $group.find('.nebenzeiten-row').first().clone();
       $newRow.find('input').val('');
       $newRow.find('select').prop('selectedIndex', 0);
   
@@ -11,7 +11,7 @@ $(document).ready(function() {
       // Entferne das Attribut, damit das neue Dropdown neu initialisiert wird
       $newRow.find('.dropdown-menu').removeAttr('data-dropdown-inited');
   
-      // Dropdowns im neuen Arbeitsvorgangs-Block initialisieren
+      // Dropdowns im neuen Nebenzeiten-Block initialisieren
       initDropdowns($newRow.get(0));
     });
   
@@ -60,6 +60,24 @@ $(document).ready(function() {
       initDropdowns($newRow.get(0));
     });
   });
+
+  // Plus-Knopf für Gewichtsklasse, Stückzahl & VGZ:
+$(document).on('click', '.add-gewichtsklasse', function() {
+  var $group = $(this).closest('.gewichtsklasse-group');
+  // Klonen der ersten Zeile der Gruppe
+  var $newRow = $group.find('.gewichtsklasse-row').first().clone();
+  // Alle Eingabefelder leeren
+  $newRow.find('input').val('');
+  // Entferne Attribut für Dropdown-Neuinitialisierung
+  $newRow.find('.dropdown-menu').removeAttr('data-dropdown-inited');
+  
+  // Füge die neue Zeile oberhalb des Plus-Buttons ein
+  $(this).parent().before($newRow);
+  
+  // Initialisiere die Dropdowns im neuen Block neu
+  initDropdowns($newRow.get(0));
+});
+
   
   // DROPDOWN-MENÜ
   

@@ -32,13 +32,15 @@
       <!-- Globaler Header: Spaltenüberschriften jeweils zentriert -->
       <div class="eingabemaske-global-header d-flex">
         <div style="flex:2; text-align: center;">Mitarbeiter</div>
-        <div style="flex:1; text-align: center;">Kostenstelle</div>
-        <div style="flex:3; text-align: center;">Arbeitsvorgang</div>
-        <div style="flex:1; text-align: center;">Gewichtsklasse</div>
-        <div style="flex:1; text-align: center;">Stückzahl</div>
-        <div style="flex:1; text-align: center;">VGZ</div>
-        <div style="flex:1; text-align: center;">Gebr. Min.</div>
-        <div style="flex:1; text-align: center;">Std. Zuschlag</div>
+        <div style="flex:10" class="d-flex">
+            <div style="flex:1; text-align: center;">Kostenstelle</div>
+            <div style="flex:2; text-align: center;">Nebenzeiten</div>
+            <div style="flex:1; text-align: center;">Gewichtsklasse</div>
+            <div style="flex:1; text-align: center;">Stückzahl</div>
+            <div style="flex:1; text-align: center;">VGZ</div>
+            <div style="flex:1; text-align: center;">Gebr. Min.</div>
+            <div style="flex:1; text-align: center;">Std. Zuschlag</div>
+        </div>
       </div>
       
       <!-- Container für alle dynamischen Eingabemasken -->
@@ -47,8 +49,8 @@
         <div class="eingabemaske-row border rounded p-2" style="background-color: #f8f9fa;">
           <!-- Mitarbeiterspalte -->
           <div class="employee-container" style="flex:2;">
-            <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow w-280px" data-bs-theme="light">
-              <form class="p-2 mb-2 bg-body-tertiary border-bottom">
+            <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow" data-bs-theme="light">
+              <form>
                 <input type="search" class="form-control" autocomplete="off" placeholder="Type to filter...">
               </form>
               <!-- Absolut positionierte Ergebnisliste, die den Container nicht vergrößert -->
@@ -93,9 +95,9 @@
                 <div class="d-flex w-100 gap-1">
                   <!-- Kostenstelle -->
                   <div style="flex:1;">
-                    <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow w-280px" data-bs-theme="light">
-                      <form class="p-2 mb-2 bg-body-tertiary border-bottom">
-                        <input type="search" class="form-control" autocomplete="off" placeholder="Kostenstelle wählen">
+                    <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow" data-bs-theme="light">
+                      <form>
+                        <input type="search" class="form-control" autocomplete="off" placeholder="Kostenstelle">
                       </form>
                       <ul class="list-unstyled mb-0" style="position: absolute; top: 100%; left: 0; width: 100%; display: none;">
                         <li>
@@ -112,13 +114,13 @@
                   </div>
                   
                     
-                  <!-- Arbeitsvorgang -->
-                  <div style="flex:3;">
-                    <div class="arbeitsvorgang-group">
-                      <div class="input-group mb-1 arbeitsvorgang-row">
-                        <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow w-280px" data-bs-theme="light">
-                          <form class="p-2 mb-2 bg-body-tertiary border-bottom">
-                            <input type="search" class="form-control" autocomplete="off" placeholder="Arbeitsvorgang wählen">
+                  <!-- Nebenzeiten -->
+                  <div style="flex:2;">
+                    <div class="nebenzeiten-group">
+                      <div class="d-flex input-group mb-1 nebenzeiten-row">
+                        <div class="nebenzeitenDropdown dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow" data-bs-theme="light">
+                          <form class="">
+                            <input type="search" class="form-control" autocomplete="off" placeholder="Nebenzeit">
                           </form>
                           <ul class="list-unstyled mb-0" style="position: absolute; top: 100%; left: 0; width: 100%; display: none;">
                             <li>
@@ -129,49 +131,68 @@
                             </li>
                           </ul>
                         </div>
-                        <input type="number" name="arbeitsvorgang_number[]" class="form-control" placeholder="Minuten">
+                        <input type="number" name="nebenzeiten_number[]" class="form-control minutenEingabe" placeholder="Minuten">
                       </div>
                       <div>
-                        <button type="button" class="btn btn-outline-secondary add-arbeitsvorgang">+</button>
+                        <button type="button" class="btn btn-outline-secondary add-nebenzeiten">+</button>
                       </div>
                     </div>
                   </div>
   
-                  <!-- Gewichtsklasse -->
-                  <div style="flex:1;">
-                    <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow w-280px" data-bs-theme="light">
-                      <form class="p-2 mb-2 bg-body-tertiary border-bottom">
-                        <input type="search" class="form-control" autocomplete="off" placeholder="Gewichtsklasse wählen">
-                      </form>
-                      <ul class="list-unstyled mb-0" style="position: absolute; top: 100%; left: 0; width: 100%; display: none;">
-                        <li>
-                          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Bitte wählen</a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Gewichtsklasse 1</a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Gewichtsklasse 2</a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Gewichtsklasse 3</a>
-                        </li>
-                      </ul>
+                  <!-- Gruppe: Gewichtsklasse, Stückzahl & VGZ -->
+                  <div class="gewichtsklasse-group" style="flex:3;">
+                    <div class="d-flex gap-1 gewichtsklasse-row mb-1">
+                      <!-- Gewichtsklasse -->
+                      <div style="flex:1;">
+                        <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow" data-bs-theme="light">
+                          <form>
+                            <input type="search" class="form-control" autocomplete="off" placeholder="Gewichtsklasse">
+                          </form>
+                          <ul class="list-unstyled mb-0" style="
+                                position: absolute;
+                                top: 100%;
+                                left: 0;
+                                width: 100%;
+                                display: none;
+                                z-index: 1050;
+                                background-color: #fff;
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                                ">
+                            <li>
+                              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Bitte wählen</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Gewichtsklasse 1</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Gewichtsklasse 2</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Gewichtsklasse 3</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <!-- Stückzahl -->
+                      <div style="flex:1;">
+                        <input type="number" name="stueckzahl[]" class="form-control" placeholder="Stückzahl">
+                      </div>
+                      <!-- VGZ -->
+                      <div style="flex:1;">
+                        <input type="text" name="vgz[]" class="form-control" placeholder="VGZ">
+                      </div>
+                    </div>
+                    <!-- Plus‑Button für Gewichtsklasse -->
+                    <div>
+                      <button type="button" class="btn btn-outline-secondary add-gewichtsklasse">+</button>
                     </div>
                   </div>
-                    
-                  <!-- Stückzahl -->
-                  <div style="flex:1;">
-                    <input type="number" name="stueckzahl[]" class="form-control">
-                  </div>
-                  <!-- Vorgabezeit -->
-                  <div style="flex:1;">
-                    <input type="text" name="vorgabezeit[]" class="form-control">
-                  </div>
+
                   <!-- Gebrauchte Minuten -->
                   <div style="flex:1;">
                     <input type="number" name="gebrauchteMinuten[]" class="form-control">
                   </div>
+                  
                   <!-- Stundenzuschlag -->
                   <div style="flex:1;">
                     <select name="stundenzuschlag[]" class="form-select" data-live-search="true" title="Stundenzuschlag wählen">
@@ -186,7 +207,7 @@
             </div>
             <!-- Button für einen neuen inneren Abschnitt -->
             <div class="inner-section-button">
-              <button type="button" class="btn btn-outline-secondary add-inner-section">Neuer Abschnitt</button>
+              <button type="button" class="btn btn-outline-secondary add-inner-section">Weitere Kostenstelle</button>
             </div>
           </div>
         </div>

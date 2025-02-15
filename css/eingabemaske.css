@@ -29,6 +29,10 @@
     margin-top: 0.5rem;
   }
 
+  .dropdown-menu{
+    padding: 0;
+  }
+
   .dropdown-menu ul {
     position: absolute;
     top: 100%;
@@ -38,5 +42,14 @@
     z-index: 1050;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .nebenzeiten-row > .minutenEingabe{
+    flex:1;
+    min-width: 3.5rem;
+  }
+
+  .nebenzeitenDropdown{
+    flex:3
   }
   
