@@ -53,3 +53,8 @@
     flex:3
   }
   
+  .btn-outline-secondary {
+    margin-right: 10px;
+    min-width: 38px;
+    min-height: 38px;
+  }

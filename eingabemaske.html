@@ -113,7 +113,7 @@
                     </div>
                   </div>
                   
-                    
+                  
                   <!-- Nebenzeiten -->
                   <div style="flex:2;">
                     <div class="nebenzeiten-group">
@@ -134,7 +134,10 @@
                         <input type="number" name="nebenzeiten_number[]" class="form-control minutenEingabe" placeholder="Minuten">
                       </div>
                       <div>
+                        <!-- Plus-Button für neue Nebenzeit-->
                         <button type="button" class="btn btn-outline-secondary add-nebenzeiten">+</button>
+                        <!-- Minus-Button für neue Nebenzeit-->
+                        <button type="button" class="btn btn-outline-secondary minus-nebenzeiten" style="display:none">-</button>
                       </div>
                     </div>
                   </div>
@@ -173,18 +176,25 @@
                           </ul>
                         </div>
                       </div>
+
                       <!-- Stückzahl -->
                       <div style="flex:1;">
                         <input type="number" name="stueckzahl[]" class="form-control" placeholder="Stückzahl">
                       </div>
+
                       <!-- VGZ -->
                       <div style="flex:1;">
                         <input type="text" name="vgz[]" class="form-control" placeholder="VGZ">
                       </div>
                     </div>
-                    <!-- Plus‑Button für Gewichtsklasse -->
-                    <div>
-                      <button type="button" class="btn btn-outline-secondary add-gewichtsklasse">+</button>
+
+                    <div>                      
+                      <div>
+                        <!-- Plus‑Button für Gewichtsklasse -->
+                        <button type="button" class="btn btn-outline-secondary add-gewichtsklasse">+</button>
+                        <!-- Minus-Button für Gewichtsklasse-->
+                        <button type="button" class="btn btn-outline-secondary minus-gewichtsklasse" style="display:none">-</button>
+                      </div>
                     </div>
                   </div>
 
