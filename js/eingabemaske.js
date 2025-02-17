@@ -17,14 +17,18 @@ $(document).ready(function() {
   $(document).on('click', '.add-eingabemaske', function() {
     var $employeeBtn = $(this).detach();
     var $newRow;
-    
-    showCustomConfirm().then(function(copyFirst) {
-      if (copyFirst) {
+  
+    showCustomConfirm().then(function(selection) {
+      // Wenn das Modal ohne Auswahl geschlossen wurde, nichts tun und Button zurücksetzen
+      if (selection === null) {
+        $('#eingabemaske-container').append($employeeBtn);
+        return;
+      }
+      
+      if (selection === true) {
         // Option 1: Zeile kopieren (alle Inhalte außerhalb des Mitarbeiters bleiben erhalten)
         $newRow = $('#eingabemaske-container .eingabemaske-row').first().clone();
-        // Leere den Mitarbeiter-Teil:
         $newRow.find('.employee-container input').val('');
-        // Entferne die Initialisierungsattribute, falls nötig:
         $newRow.find('.employee-container .dropdown-menu').removeAttr('data-dropdown-inited');
       } else {
         // Option 2: Neue leere Zeile erstellen (alles wird geleert)
@@ -57,11 +61,12 @@ $(document).ready(function() {
       // Initialisiere Dropdowns neu
       $newRow.find('.dropdown-menu').removeAttr('data-dropdown-inited');
       initDropdowns($newRow.get(0));
-  
+      
       // Aktualisiere die Sichtbarkeit der Minus‑Buttons für Mitarbeiter
       updateMinusButtonForMitarbeiter();
     });
   });
+  
 
   // Minus-Button Mitarbeiter
   $(document).on('click', '.minus-eingabemaske', function() {
@@ -253,17 +258,29 @@ $(document).ready(function() {
   // Funktion zur Anzeige der Fragebox für einen Neuen Mitarbeiter
   function showCustomConfirm() {
     return new Promise(function(resolve, reject) {
-      // Zeige das Modal
+      let resolved = false;
       $('#confirmModal').modal('show');
   
-      // Achte darauf, dass alte Click-Handler entfernt werden, um Mehrfachauslösungen zu vermeiden
       $('#modalConfirm').off('click').one('click', function() {
-        $('#confirmModal').modal('hide');
-        resolve(true); // Zeile kopieren
+        if (!resolved) {
+          resolved = true;
+          $('#confirmModal').modal('hide');
+          resolve(true); // Zeile kopieren
+        }
       });
       $('#modalCancel').off('click').one('click', function() {
-        $('#confirmModal').modal('hide');
-        resolve(false); // Leere Zeile
+        if (!resolved) {
+          resolved = true;
+          $('#confirmModal').modal('hide');
+          resolve(false); // Neue leere Zeile
+        }
+      });
+      // Falls das Modal auf andere Weise geschlossen wird:
+      $('#confirmModal').off('hidden.bs.modal').one('hidden.bs.modal', function() {
+        if (!resolved) {
+          resolved = true;
+          resolve(null); // Keine Aktion, wenn Modal ohne Auswahl geschlossen wird
+        }
       });
     });
   }
