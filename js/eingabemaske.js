@@ -16,33 +16,88 @@ $(document).ready(function() {
   // Neuer Mitarbeiter:
   $(document).on('click', '.add-eingabemaske', function() {
     var $employeeBtn = $(this).detach();
-    var $newRow = $('#eingabemaske-container .eingabemaske-row').first().clone();
-    $newRow.find('input').val('');
-    $newRow.find('select').prop('selectedIndex', 0);
-
-    // In jedem inner-container: Nur den ersten inneren Abschnitt beibehalten
-    $newRow.find('.inner-container').each(function() {
-      var $wrapper = $(this).find('.inner-section-wrapper');
-      $wrapper.children('.eingabemaske-abschnitt').not(':first').remove();
+    var $newRow;
+    
+    showCustomConfirm().then(function(copyFirst) {
+      if (copyFirst) {
+        // Option 1: Zeile kopieren (alle Inhalte außerhalb des Mitarbeiters bleiben erhalten)
+        $newRow = $('#eingabemaske-container .eingabemaske-row').first().clone();
+        // Leere den Mitarbeiter-Teil:
+        $newRow.find('.employee-container input').val('');
+        // Entferne die Initialisierungsattribute, falls nötig:
+        $newRow.find('.employee-container .dropdown-menu').removeAttr('data-dropdown-inited');
+      } else {
+        // Option 2: Neue leere Zeile erstellen (alles wird geleert)
+        $newRow = $('#eingabemaske-container .eingabemaske-row').first().clone();
+        $newRow.find('input').val('');
+        $newRow.find('select').prop('selectedIndex', 0);
+        
+        // In jedem inneren Container: Nur den ersten inneren Abschnitt beibehalten
+        $newRow.find('.inner-container').each(function() {
+          var $wrapper = $(this).find('.inner-section-wrapper');
+          $wrapper.children('.eingabemaske-abschnitt').not(':first').remove();
+          
+          // Im verbliebenen inneren Abschnitt: Entferne alle zusätzlichen Nebenzeiten-Zeilen
+          var $section = $wrapper.children('.eingabemaske-abschnitt').first();
+          $section.find('.nebenzeiten-group').each(function() {
+            $(this).find('.nebenzeiten-row').not(':first').remove();
+          });
+          
+          // Ebenso: Entferne alle zusätzlichen Gewichtsklasse-Zeilen
+          $section.find('.gewichtsklasse-group').each(function() {
+            $(this).find('.gewichtsklasse-row').not(':first').remove();
+          });
+        });
+      }
+      
+      // Füge die neue Zeile ein und hänge den Button wieder an
+      $('#eingabemaske-container').append($newRow);
+      $newRow.after($employeeBtn);
+  
+      // Initialisiere Dropdowns neu
+      $newRow.find('.dropdown-menu').removeAttr('data-dropdown-inited');
+      initDropdowns($newRow.get(0));
+  
+      // Aktualisiere die Sichtbarkeit der Minus‑Buttons für Mitarbeiter
+      updateMinusButtonForMitarbeiter();
     });
-
-    $('#eingabemaske-container').append($newRow);
-    $newRow.after($employeeBtn);
-
-    // Entferne das Attribut für alle Dropdowns im neuen Mitarbeiter-Block
-    $newRow.find('.dropdown-menu').removeAttr('data-dropdown-inited');
-
-    // Dropdowns im neuen Mitarbeiter-Block initialisieren
-    initDropdowns($newRow.get(0));
-
-    // Aktualisiere die Sichtbarkeit der Mitarbeiter-Minus-Buttons
-    updateMinusButtonForMitarbeiter();
-    });
+  });
 
   // Minus-Button Mitarbeiter
   $(document).on('click', '.minus-eingabemaske', function() {
     $(this).closest('.eingabemaske-row').remove();
     updateMinusButtonForMitarbeiter();
+  });
+
+  // Neue Kostenstelle:
+  $(document).on('click', '.add-inner-section', function() {
+    var $innerContainer = $(this).closest('.inner-container');
+    var $wrapper = $innerContainer.find('.inner-section-wrapper');
+    // Erstelle einen neuen inneren Abschnitt aus dem Original-Template
+    var $newSection = originalInnerSectionTemplate.clone();
+    
+    // Füge den neuen Abschnitt in den Wrapper ein
+    $wrapper.append($newSection);
+    
+    // Entferne das Attribut für Dropdown-Neuinitialisierung
+    $newSection.find('.dropdown-menu').removeAttr('data-dropdown-inited');
+    
+    // Initialisiere die Dropdowns im neuen Abschnitt
+    initDropdowns($newSection.get(0));
+    
+    // Aktualisiere die Sichtbarkeit der Nebenzeiten-Minus-Buttons im gesamten Mitarbeiter-Container
+    var $employeeContainer = $(this).closest('.eingabemaske-row');
+    updateMinusButtonForNebenzeiten($employeeContainer);
+    
+    // Aktualisiere die Sichtbarkeit der Kostenstelle Minus-Buttons
+    updateMinusButtonForCostCenter($wrapper);
+  });
+  
+  // Minus-Button Kostenstelle
+  $(document).on('click', '.minus-inner-section', function() {
+    var $wrapper = $(this).closest('.inner-section-wrapper');
+    $(this).closest('.eingabemaske-abschnitt').remove();
+    updateMinusButtonForCostCenter($wrapper);
   });
 
   // Neue Nebenzeit:
@@ -115,47 +170,26 @@ $(document).ready(function() {
     updateMinusButtonForNebenzeiten($employeeContainer);
   });
 
-  // Neue Kostenstelle:
-  $(document).on('click', '.add-inner-section', function() {
-    var $innerContainer = $(this).closest('.inner-container');
-    var $wrapper = $innerContainer.find('.inner-section-wrapper');
-    // Erstelle einen neuen inneren Abschnitt aus dem Original-Template
-    var $newSection = originalInnerSectionTemplate.clone();
-    
-    // Füge den neuen Abschnitt am Ende des Wrappers ein (also unter der letzten Eingabemaske-Abschnitt)
-    $wrapper.append($newSection);
-    
-    // Entferne das Attribut für Dropdown-Neuinitialisierung
-    $newSection.find('.dropdown-menu').removeAttr('data-dropdown-inited');
-    
-    // Initialisiere die Dropdowns im neuen Abschnitt
-    initDropdowns($newSection.get(0));
-    
-    // Aktualisiere die Sichtbarkeit der Nebenzeiten-Minus-Buttons im gesamten Mitarbeiter-Container
-    var $employeeContainer = $(this).closest('.eingabemaske-row');
-    updateMinusButtonForNebenzeiten($employeeContainer);
-  });
-
-  // Neue Gewichtsklasse, Stückzahl & VGZ:
+  // Neue Gewichtsklasse
   $(document).on('click', '.add-gewichtsklasse', function() {
     var $group = $(this).closest('.gewichtsklasse-group');
-    // Klonen der ersten Zeile der Gruppe
-    var $newRow = $group.find('.gewichtsklasse-row').first().clone();
-    // Eingabefelder leeren
+    var $template = $group.find('.gewichtsklasse-row').first();
+    var $newRow = $template.clone();
+  
+    // Leere die Eingabefelder im neuen Gewichtsklasse-Block
     $newRow.find('input').val('');
-    // Attribut für Dropdown-Neuinitialisierung entfernen
+    $newRow.find('select').prop('selectedIndex', 0);
+  
+    // Füge den neuen Block nach der letzten Gewichtsklasse-Zeile ein
+    $template.after($newRow);
+  
+    // Entferne den Initialisierungsmarker und initialisiere die Dropdowns neu
     $newRow.find('.dropdown-menu').removeAttr('data-dropdown-inited');
-    
-    // Neue Zeile oberhalb des Plus-Buttons einfügen
-    $(this).parent().before($newRow);
-    
-    // Dropdowns im neuen Block initialisieren
     initDropdowns($newRow.get(0));
-    
-    // Minus-Button Sichtbarkeit aktualisieren
+  
+    // Aktualisiere die Sichtbarkeit der Minus‑Buttons für Gewichtsklasse
     updateMinusButtonForGewichtsklasse($group);
   });
-
 
   // Minus‑Button bei Gewichtsklasse
   $(document).on('click', '.minus-gewichtsklasse', function() {
@@ -177,6 +211,17 @@ $(document).ready(function() {
         $(this).find('.minus-eingabemaske').show();
       } else {
         $(this).find('.minus-eingabemaske').hide();
+      }
+    });
+  }
+
+  // Hilfsfunktion: Aktualisiert die Sichtbarkeit des Minus-Buttons für Kostenstelle
+  function updateMinusButtonForCostCenter($wrapper) {
+    $wrapper.children('.eingabemaske-abschnitt').each(function(index) {
+      if (index > 0) {
+        $(this).find('.minus-inner-section').show();
+      } else {
+        $(this).find('.minus-inner-section').hide();
       }
     });
   }
@@ -205,7 +250,23 @@ $(document).ready(function() {
     });
   }
 
-
+  // Funktion zur Anzeige der Fragebox für einen Neuen Mitarbeiter
+  function showCustomConfirm() {
+    return new Promise(function(resolve, reject) {
+      // Zeige das Modal
+      $('#confirmModal').modal('show');
+  
+      // Achte darauf, dass alte Click-Handler entfernt werden, um Mehrfachauslösungen zu vermeiden
+      $('#modalConfirm').off('click').one('click', function() {
+        $('#confirmModal').modal('hide');
+        resolve(true); // Zeile kopieren
+      });
+      $('#modalCancel').off('click').one('click', function() {
+        $('#confirmModal').modal('hide');
+        resolve(false); // Leere Zeile
+      });
+    });
+  }
 
   // DROPDOWN-MENÜ
   
