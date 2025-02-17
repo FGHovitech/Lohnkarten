@@ -51,7 +51,7 @@
           <div class="employee-container" style="flex:2;">
             <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow" data-bs-theme="light">
               <form>
-                <input type="search" class="form-control" autocomplete="off" placeholder="Type to filter...">
+                <input type="search" class="form-control" autocomplete="off" placeholder="Mitarbeiter">
               </form>
               <!-- Absolut positionierte Ergebnisliste, die den Container nicht vergrößert -->
               <ul class="list-unstyled mb-0" style="
@@ -83,6 +83,10 @@
                   </a>
                 </li>
               </ul>
+            </div>
+             <!-- Mitarbeiter-Aktionen: Minus Button (für Mitarbeiter entfernen) -->
+            <div class="employee-actions" style="display: flex; align-items: center;">
+              <button type="button" class="btn btn-outline-danger minus-eingabemaske" style="display: none;">Mitarbeiter löschen</button>
             </div>
           </div>
           
@@ -137,7 +141,7 @@
                         <!-- Plus-Button für neue Nebenzeit-->
                         <button type="button" class="btn btn-outline-secondary add-nebenzeiten">+</button>
                         <!-- Minus-Button für neue Nebenzeit-->
-                        <button type="button" class="btn btn-outline-secondary minus-nebenzeiten" style="display:none">-</button>
+                        <button type="button" class="btn btn-outline-danger minus-nebenzeiten" style="display:none">-</button>
                       </div>
                     </div>
                   </div>
@@ -193,7 +197,7 @@
                         <!-- Plus‑Button für Gewichtsklasse -->
                         <button type="button" class="btn btn-outline-secondary add-gewichtsklasse">+</button>
                         <!-- Minus-Button für Gewichtsklasse-->
-                        <button type="button" class="btn btn-outline-secondary minus-gewichtsklasse" style="display:none">-</button>
+                        <button type="button" class="btn btn-outline-danger minus-gewichtsklasse" style="display:none">-</button>
                       </div>
                     </div>
                   </div>
@@ -220,6 +224,7 @@
               <button type="button" class="btn btn-outline-secondary add-inner-section">Weitere Kostenstelle</button>
             </div>
           </div>
+          
         </div>
       </div>
       <!-- Gesamt-Plus-Button: Dieser Button wird immer unter der letzten Zeile angezeigt -->

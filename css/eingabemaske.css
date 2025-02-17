@@ -58,3 +58,14 @@
     min-width: 38px;
     min-height: 38px;
   }
+
+  .btn-outline-danger{
+    margin-right: 10px;
+    min-width: 38px;
+    min-height: 38px;
+  }
+
+  .minus-eingabemaske {
+    margin-top: 10px;
+    margin-left: 10px;
+  }

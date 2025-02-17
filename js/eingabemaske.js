@@ -8,7 +8,10 @@ $(document).ready(function() {
     $('.eingabemaske-row').each(function() {
       updateMinusButtonForNebenzeiten($(this));
     });
+    
     originalInnerSectionTemplate = $('.inner-section-wrapper .eingabemaske-abschnitt').first().clone();
+
+    updateMinusButtonForMitarbeiter();
   });
 
 
@@ -106,7 +109,16 @@ $(document).ready(function() {
 
     // Dropdowns im neuen Mitarbeiter-Block initialisieren
     initDropdowns($newRow.get(0));
+
+    // Aktualisiere die Sichtbarkeit der Mitarbeiter-Minus-Buttons
+    updateMinusButtonForMitarbeiter();
+    });
   });
+
+  // Minus-Button Mitarbeiter
+  $(document).on('click', '.minus-eingabemaske', function() {
+    $(this).closest('.eingabemaske-row').remove();
+    updateMinusButtonForMitarbeiter();
   });
 
   // Neue Gewichtsklasse, Stückzahl & VGZ:
@@ -163,27 +175,39 @@ $(document).ready(function() {
   });
   
 
-// Hilfsfunktion: Aktualisiert die Sichtbarkeit des Minus‑Buttons für Gewichtsklassen
-function updateMinusButtonForGewichtsklasse($group) {
-  var $rows = $group.find('.gewichtsklasse-row');
-  var $minusButton = $group.find('.minus-gewichtsklasse');
-  if ($rows.length > 1) {
-    $minusButton.show();
-  } else {
-    $minusButton.hide();
+  // Hilfsfunktion: Aktualisiert die Sichtbarkeit des Minus‑Buttons für Gewichtsklassen
+  function updateMinusButtonForGewichtsklasse($group) {
+    var $rows = $group.find('.gewichtsklasse-row');
+    var $minusButton = $group.find('.minus-gewichtsklasse');
+    if ($rows.length > 1) {
+      $minusButton.show();
+    } else {
+      $minusButton.hide();
+    }
   }
-}
 
-// Hilfsfunktion: Aktualisiert die Sichtbarkeit der Nebenzeiten‑Minus‑Buttons für einen Mitarbeiter-Container
-function updateMinusButtonForNebenzeiten($employeeContainer) {
-  // Zählt alle Nebenzeitenzeilen innerhalb des gesamten Mitarbeiters
-  var totalRows = $employeeContainer.find('.nebenzeiten-row').length;
-  if (totalRows > 1) {
-    $employeeContainer.find('.minus-nebenzeiten').show();
-  } else {
-    $employeeContainer.find('.minus-nebenzeiten').hide();
+  // Hilfsfunktion: Aktualisiert die Sichtbarkeit der Nebenzeiten‑Minus‑Buttons für einen Mitarbeiter-Container
+  function updateMinusButtonForNebenzeiten($employeeContainer) {
+    // Zählt alle Nebenzeitenzeilen innerhalb des gesamten Mitarbeiters
+    var totalRows = $employeeContainer.find('.nebenzeiten-row').length;
+    if (totalRows > 1) {
+      $employeeContainer.find('.minus-nebenzeiten').show();
+    } else {
+      $employeeContainer.find('.minus-nebenzeiten').hide();
+    }
   }
-}
+
+  // Hilfsfunktion: Aktualisiert die Sichtbarkeit des Minus-Buttons für Mitarbeiter
+  function updateMinusButtonForMitarbeiter() {
+    $('#eingabemaske-container .eingabemaske-row').each(function(index) {
+      // Der Minus-Button soll erst ab dem 2. Mitarbeiter (Index >= 1) sichtbar sein
+      if (index > 0) {
+        $(this).find('.minus-eingabemaske').show();
+      } else {
+        $(this).find('.minus-eingabemaske').hide();
+      }
+    });
+  }
 
   // DROPDOWN-MENÜ
   
