@@ -217,6 +217,9 @@
                     </select>
                   </div>
                 </div>
+                <div class="cost-center-actions" style="text-align: right; margin-top: 5px;">
+                  <button type="button" class="btn btn-outline-danger minus-inner-section" style="display:none">Kostenstelle löschen</button>
+                </div>
               </div>
             </div>
             <!-- Button für einen neuen inneren Abschnitt -->
@@ -242,5 +245,25 @@
       </div>
     </div>
   </footer>
+
+    <!-- Custom Confirm Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmModalLabel">Mitarbeiter hinzufügen</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+          </div>
+          <div class="modal-body">
+            Soll die erste Eingabemaske kopiert werden (alle Inhalte außerhalb des Mitarbeiters beibehalten)?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="modalCancel">Neue leere Zeile</button>
+            <button type="button" class="btn btn-primary" id="modalConfirm">Zeile kopieren</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 </body>
 </html>

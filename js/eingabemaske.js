@@ -1,7 +1,6 @@
-$(document).ready(function() {
-  var originalInnerSectionTemplate = null;
+var originalInnerSectionTemplate = null;
+$(document).ready(function() {  
     // Initial beim Laden der Seite: Minus‑Buttons entsprechend der vorhandenen Zeilen ausblenden oder einblenden
-  $(document).ready(function() {
     $('.gewichtsklasse-group').each(function() {
       updateMinusButtonForGewichtsklasse($(this));
     });
@@ -12,10 +11,41 @@ $(document).ready(function() {
     originalInnerSectionTemplate = $('.inner-section-wrapper .eingabemaske-abschnitt').first().clone();
 
     updateMinusButtonForMitarbeiter();
+});
+
+  // Neuer Mitarbeiter:
+  $(document).on('click', '.add-eingabemaske', function() {
+    var $employeeBtn = $(this).detach();
+    var $newRow = $('#eingabemaske-container .eingabemaske-row').first().clone();
+    $newRow.find('input').val('');
+    $newRow.find('select').prop('selectedIndex', 0);
+
+    // In jedem inner-container: Nur den ersten inneren Abschnitt beibehalten
+    $newRow.find('.inner-container').each(function() {
+      var $wrapper = $(this).find('.inner-section-wrapper');
+      $wrapper.children('.eingabemaske-abschnitt').not(':first').remove();
+    });
+
+    $('#eingabemaske-container').append($newRow);
+    $newRow.after($employeeBtn);
+
+    // Entferne das Attribut für alle Dropdowns im neuen Mitarbeiter-Block
+    $newRow.find('.dropdown-menu').removeAttr('data-dropdown-inited');
+
+    // Dropdowns im neuen Mitarbeiter-Block initialisieren
+    initDropdowns($newRow.get(0));
+
+    // Aktualisiere die Sichtbarkeit der Mitarbeiter-Minus-Buttons
+    updateMinusButtonForMitarbeiter();
+    });
+
+  // Minus-Button Mitarbeiter
+  $(document).on('click', '.minus-eingabemaske', function() {
+    $(this).closest('.eingabemaske-row').remove();
+    updateMinusButtonForMitarbeiter();
   });
 
-
-  // Nebenzeiten-Plus-Button: Fügt innerhalb eines inneren Abschnitts eine weitere Nebenzeitenszeile hinzu.
+  // Neue Nebenzeit:
   $(document).on('click', '.add-nebenzeiten', function() {
     var $group = $(this).closest('.nebenzeiten-group');
     var $template = $group.find('.nebenzeiten-row').first();
@@ -64,61 +94,46 @@ $(document).ready(function() {
     updateMinusButtonForNebenzeiten($employeeContainer);
   });
   
+  // Minus‑Button bei Nebenzeiten
+  $(document).on('click', '.minus-nebenzeiten', function() {
+    // Bestimme den gesamten Mitarbeiter-Container (eingabemaske‑row)
+    var $employeeContainer = $(this).closest('.eingabemaske-row');
+    var $allNebenzeiten = $employeeContainer.find('.nebenzeiten-row');
+    
+    // Falls weniger als zwei Nebenzeiten im gesamten Mitarbeiter vorhanden sind, passiert nichts.
+    if ($allNebenzeiten.length < 2) {
+      return;
+    }
+    
+    // Entferne in dem aktuellen Kostenstellen-Container (nebenzeiten-group) die letzte Nebenzeiten-Zeile
+    var $group = $(this).closest('.nebenzeiten-group');
+    var $rows = $group.find('.nebenzeiten-row');
+    if ($rows.length > 0) {
+      $rows.last().remove();
+    }
+    
+    updateMinusButtonForNebenzeiten($employeeContainer);
+  });
+
   // Neue Kostenstelle:
   $(document).on('click', '.add-inner-section', function() {
     var $innerContainer = $(this).closest('.inner-container');
     var $wrapper = $innerContainer.find('.inner-section-wrapper');
-    var $btn = $(this).detach(); // Button vorübergehend entfernen
-  
     // Erstelle einen neuen inneren Abschnitt aus dem Original-Template
     var $newSection = originalInnerSectionTemplate.clone();
-  
-    // Füge den neuen Abschnitt in den Wrapper ein und hänge den Button wieder an
+    
+    // Füge den neuen Abschnitt am Ende des Wrappers ein (also unter der letzten Eingabemaske-Abschnitt)
     $wrapper.append($newSection);
-    $newSection.after($btn);
-  
-    // Entferne das Attribut für die Dropdown-Neuinitialisierung
+    
+    // Entferne das Attribut für Dropdown-Neuinitialisierung
     $newSection.find('.dropdown-menu').removeAttr('data-dropdown-inited');
-  
+    
     // Initialisiere die Dropdowns im neuen Abschnitt
     initDropdowns($newSection.get(0));
-  
-    // Aktualisiere die Sichtbarkeit der Nebenzeiten-Minus-Buttons:
+    
+    // Aktualisiere die Sichtbarkeit der Nebenzeiten-Minus-Buttons im gesamten Mitarbeiter-Container
     var $employeeContainer = $(this).closest('.eingabemaske-row');
     updateMinusButtonForNebenzeiten($employeeContainer);
-  });
-
-  // Neuer Mitarbeiter:
-  $(document).on('click', '.add-eingabemaske', function() {
-    var $employeeBtn = $(this).detach();
-    var $newRow = $('#eingabemaske-container .eingabemaske-row').first().clone();
-    $newRow.find('input').val('');
-    $newRow.find('select').prop('selectedIndex', 0);
-
-    // In jedem inner-container: Nur den ersten inneren Abschnitt beibehalten
-    $newRow.find('.inner-container').each(function() {
-      var $wrapper = $(this).find('.inner-section-wrapper');
-      $wrapper.children('.eingabemaske-abschnitt').not(':first').remove();
-    });
-
-    $('#eingabemaske-container').append($newRow);
-    $newRow.after($employeeBtn);
-
-    // Entferne das Attribut für alle Dropdowns im neuen Mitarbeiter-Block
-    $newRow.find('.dropdown-menu').removeAttr('data-dropdown-inited');
-
-    // Dropdowns im neuen Mitarbeiter-Block initialisieren
-    initDropdowns($newRow.get(0));
-
-    // Aktualisiere die Sichtbarkeit der Mitarbeiter-Minus-Buttons
-    updateMinusButtonForMitarbeiter();
-    });
-  });
-
-  // Minus-Button Mitarbeiter
-  $(document).on('click', '.minus-eingabemaske', function() {
-    $(this).closest('.eingabemaske-row').remove();
-    updateMinusButtonForMitarbeiter();
   });
 
   // Neue Gewichtsklasse, Stückzahl & VGZ:
@@ -153,27 +168,18 @@ $(document).ready(function() {
     updateMinusButtonForGewichtsklasse($group);
   });
 
-  // Minus‑Button bei Nebenzeiten
-  $(document).on('click', '.minus-nebenzeiten', function() {
-    // Bestimme den gesamten Mitarbeiter-Container (eingabemaske‑row)
-    var $employeeContainer = $(this).closest('.eingabemaske-row');
-    var $allNebenzeiten = $employeeContainer.find('.nebenzeiten-row');
-    
-    // Falls weniger als zwei Nebenzeiten im gesamten Mitarbeiter vorhanden sind, passiert nichts.
-    if ($allNebenzeiten.length < 2) {
-      return;
-    }
-    
-    // Entferne in dem aktuellen Kostenstellen-Container (nebenzeiten-group) die letzte Nebenzeiten-Zeile
-    var $group = $(this).closest('.nebenzeiten-group');
-    var $rows = $group.find('.nebenzeiten-row');
-    if ($rows.length > 0) {
-      $rows.last().remove();
-    }
-    
-    updateMinusButtonForNebenzeiten($employeeContainer);
-  });
   
+  // Hilfsfunktion: Aktualisiert die Sichtbarkeit des Minus-Buttons für Mitarbeiter
+  function updateMinusButtonForMitarbeiter() {
+    $('#eingabemaske-container .eingabemaske-row').each(function(index) {
+      // Der Minus-Button soll erst ab dem 2. Mitarbeiter (Index >= 1) sichtbar sein
+      if (index > 0) {
+        $(this).find('.minus-eingabemaske').show();
+      } else {
+        $(this).find('.minus-eingabemaske').hide();
+      }
+    });
+  }
 
   // Hilfsfunktion: Aktualisiert die Sichtbarkeit des Minus‑Buttons für Gewichtsklassen
   function updateMinusButtonForGewichtsklasse($group) {
@@ -188,26 +194,18 @@ $(document).ready(function() {
 
   // Hilfsfunktion: Aktualisiert die Sichtbarkeit der Nebenzeiten‑Minus‑Buttons für einen Mitarbeiter-Container
   function updateMinusButtonForNebenzeiten($employeeContainer) {
-    // Zählt alle Nebenzeitenzeilen innerhalb des gesamten Mitarbeiters
     var totalRows = $employeeContainer.find('.nebenzeiten-row').length;
-    if (totalRows > 1) {
-      $employeeContainer.find('.minus-nebenzeiten').show();
-    } else {
-      $employeeContainer.find('.minus-nebenzeiten').hide();
-    }
-  }
-
-  // Hilfsfunktion: Aktualisiert die Sichtbarkeit des Minus-Buttons für Mitarbeiter
-  function updateMinusButtonForMitarbeiter() {
-    $('#eingabemaske-container .eingabemaske-row').each(function(index) {
-      // Der Minus-Button soll erst ab dem 2. Mitarbeiter (Index >= 1) sichtbar sein
-      if (index > 0) {
-        $(this).find('.minus-eingabemaske').show();
+    $employeeContainer.find('.nebenzeiten-group').each(function() {
+      var groupRows = $(this).find('.nebenzeiten-row').length;
+      if (totalRows > 1 && groupRows > 0) {
+        $(this).find('.minus-nebenzeiten').show();
       } else {
-        $(this).find('.minus-eingabemaske').hide();
+        $(this).find('.minus-nebenzeiten').hide();
       }
     });
   }
+
+
 
   // DROPDOWN-MENÜ
   
