@@ -35,13 +35,13 @@
         <div style="flex:10" class="d-flex">
             <div style="flex:1; text-align: center;">Kostenstelle</div>
             <div style="flex:3; text-align: center;">Nebenzeiten</div>
-            <div style="flex:4" class="d-flex">
+            <div style="flex:6" class="d-flex">
               <div style="flex:2; text-align: center;">Gewichtsklasse</div>
               <div style="flex:1; text-align: center;">Stückzahl</div>
               <div style="flex:1; text-align: center;">VGZ</div>
+              <div style="flex:1; text-align: center;">Akkord Min.</div>
+              <div style="flex:1; text-align: center;">Gebr. Min.</div>
             </div>
-            <div style="flex:1; text-align: center;">Gebr. Min.</div>
-            <div style="flex:1; text-align: center;">Akkord Min.</div>
             <div style="flex:2; text-align: center;">Std. Zuschlag</div>
         </div>
       </div>
@@ -153,7 +153,7 @@
                   </div>
   
                   <!-- Gruppe: Gewichtsklasse, Stückzahl & VGZ -->
-                  <div class="gewichtsklasse-group" style="flex:4;">
+                  <div class="gewichtsklasse-group" style="flex:6;">
                     <div class="d-flex gap-1 gewichtsklasse-row mb-1">
                       <!-- Gewichtsklasse -->
                       <div style="flex:2;">
@@ -196,6 +196,15 @@
                       <div style="flex:1;">
                         <input type="text" name="vgz[]" class="form-control" placeholder="VGZ">
                       </div>
+
+                      <!-- Akkordminuten -->
+                      <div style="flex:1;">
+                        <input type="number" name="akkordMinuten[]" class="form-control" placeholder="Akkordmin.">
+                      </div>
+                      <!-- Gebrauchte Minuten -->
+                      <div style="flex:1;">
+                        <input type="number" name="gebrauchteMinuten[]" class="form-control" placeholder="Gebr.Min.">
+                      </div>
                     </div>
 
                     <div>                      
@@ -206,18 +215,11 @@
                         <button type="button" class="btn btn-outline-danger minus-gewichtsklasse" style="display:none">-</button>
                       </div>
                     </div>
+                    
+                    
                   </div>
 
-                  <!-- Gebrauchte Minuten -->
-                  <div style="flex:1;">
-                    <input type="number" name="gebrauchteMinuten[]" class="form-control" placeholder="Gebr.Min.">
-                  </div>
                   
-                  <!-- Akkordminuten -->
-                  <div style="flex:1;">
-                    <input type="number" name="akkordMinuten[]" class="form-control" placeholder="Akkordmin.">
-                  </div>
-
                   <!-- Stundenzuschlag -->
                   <div style="flex:2;">
                     <div class="d-flex gap-1">

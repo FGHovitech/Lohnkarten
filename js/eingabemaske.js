@@ -1,4 +1,5 @@
 var originalInnerSectionTemplate = null;
+
 $(document).ready(function() {  
     // Initial beim Laden der Seite: Minus‑Buttons entsprechend der vorhandenen Zeilen ausblenden oder einblenden
     $('.gewichtsklasse-group').each(function() {
