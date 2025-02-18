@@ -88,8 +88,14 @@
               </ul>
             </div>
              <!-- Mitarbeiter-Aktionen: Minus Button (für Mitarbeiter entfernen) -->
-            <div class="employee-actions" style="display: flex; align-items: center;">
-              <button type="button" class="btn btn-outline-danger minus-eingabemaske" style="display: none;">Mitarbeiter löschen</button>
+            <div class="employee-actions" style="align-items: center;">
+              <div class="d-flex gesamtstunden-container" >
+                <div class="gesamtStunden-text">Gesamtstunden:</div>
+                <input type="text" name="gesamtStunden" class="form-control" placeholder="Gesamt Std.">
+              </div>
+              <div>
+              <button type="button" class="btn btn-outline-danger minus-eingabemaske" style="display:none;">Mitarbeiter löschen</button>
+            </div>             
             </div>
           </div>
           
@@ -219,15 +225,14 @@
                     
                   </div>
 
-                  
+                  <div class="stunden-group" style="flex:2">
                   <!-- Stundenzuschlag -->
-                  <div style="flex:2;">
                     <div class="d-flex gap-1">
                       <input type="number" name="stundenzuschlag_10[]" class="form-control" placeholder="10%">
                       <input type="number" name="stundenzuschlag_25[]" class="form-control" placeholder="25%">
                       <input type="number" name="stundenzuschlag_40[]" class="form-control" placeholder="40%">
                     </div>
-                  </div>
+                </div>
                 </div>
               </div>
             </div>

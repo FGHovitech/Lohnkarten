@@ -66,6 +66,14 @@
   }
 
   .minus-eingabemaske {
-    margin-top: 10px;
-    margin-left: 10px;
+    margin-top: 0.5rem;
+  }
+
+  .gesamtstunden-container{
+    margin-top: 0.5rem;
+  }
+
+  .gesamtStunden-text{
+    align-content: center;
+    margin-right: 1rem;
   }
