@@ -1,42 +1,113 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auslesemaske</title>
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/suedleder-color.css">
-    
-    <script defer src="./js/jquery.min.js"></script>
-    <script defer src="./js/bootstrap.bundle.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auslesemaske</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/suedleder-color.css">
+  
+  <!-- jQuery und Bootstrap JS -->
+  <script defer src="./js/jquery.min.js"></script>
+  <script defer src="./js/bootstrap.bundle.min.js"></script>
+  <script defer src="./js/ausgabemaske.js"></script>
 </head>
 <body>
-    <div class="container-fluid">
-        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-          <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-            <img class="logo" src="./pictures/Suedleder_Logo.svg" alt="Südleder Logo">
-            <span class="fs-4">Akkordarbeit</span>
-          </a>
-          <ul class="nav nav-pills">
-            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-          </ul>
-        </header>
+  <div class="container-fluid">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img class="logo" src="./pictures/Suedleder_Logo.svg" alt="Südleder Logo">
+        <span class="fs-4">Akkordarbeit</span>
+      </a>
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+      </ul>
+    </header>
+  </div>
+
+  <div class="container">
+    <!-- Mitarbeitersuche in Ausgabemaske -->
+    <div class="employee-container mb-3" style="flex:2;">
+      <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow" data-bs-theme="light">
+        <form>
+          <input type="search" class="form-control" autocomplete="off" placeholder="Mitarbeiter">
+        </form>
+        <!-- Absolut positionierte Ergebnisliste -->
+        <ul class="list-unstyled mb-0" style="
+              position: absolute;
+              top: 100%;
+              left: 0;
+              width: 100%;
+              display: none;
+              z-index: 1050;
+              background-color: #fff;
+              box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+              ">
+          <li>
+            <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
+              <span class="d-inline-block bg-success rounded-circle p-1"></span>
+              (5111) Peter Lustig
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
+              <span class="d-inline-block bg-primary rounded-circle p-1"></span>
+              (5120) Max Mustermann
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
+              <span class="d-inline-block bg-danger rounded-circle p-1"></span>
+              (5153) Marco Polo
+            </a>
+          </li>
+        </ul>
       </div>
+    </div>
 
+    
+    <!-- Schaltflächen zur Auswahl der Ansicht -->
+    <div class="btn-group mb-3" role="group" aria-label="Ansicht Optionen">
+      <button type="button" class="btn btn-primary" id="dailyBtn">Tagesansicht</button>
+      <button type="button" class="btn btn-primary" id="weeklyBtn">Wochenansicht</button>
+      <button type="button" class="btn btn-primary" id="monthlyBtn">Monatsansicht</button>
+    </div>
 
+    <!-- Header zum Anzeigen der Überschrift -->
+    <div class="header-container d-flex justify-content-center">
+      <p class="h2"></p>
+    </div>
 
+    <!-- Tabelle zur Anzeige der Informationen -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Kostenstelle</th>
+          <th scope="col">Akkord Min.</th>
+          <th scope="col">gebr. Min.</th>
+          <th scope="col">durch. Min.</th>
+          <th scope="col">Gesamtstunden</th>
+          <th scope="col">10%</th>
+          <th scope="col">20%</th>
+          <th scope="col">40%</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr>
+          <td>Beispielinhalt</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
+  <!-- Footer -->
+  <footer class="container mt-auto">
+    <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <div class="col-md-4 d-flex align-items-center">
+        <span class="mb-3 mb-md-0 text-body-secondary">© 2025 Südleder</span>
+      </div>
+    </div>
+  </footer>
 
-
-
-
-      <!-- Footer -->
-    <footer class="container mt-auto">
-        <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-            <span class="mb-3 mb-md-0 text-body-secondary">© 2025 Südleder</span>
-        </div>
-        </div>
-    </footer>
 </body>
 </html>

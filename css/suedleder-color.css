@@ -1,6 +1,7 @@
 body{
     color: #153A2A;
 }
+
 header {
     background-color: #153A2A;
     color: #ffffff;
@@ -14,6 +15,22 @@ header {
 
 .btn-primary{   
     background-color: #153A2A; 
+    border-color: #153A2A;
+}
+
+.btn-primary:hover{
+    background-color: #BFCF28;
+    border-color: #BFCF28;
+}
+
+.btn-secondary{
+    background-color: #BFCF28;
+    border-color: #BFCF28;
+}
+
+.btn-secondary:hover{
+    background-color: #BFCF28;
+    border-color: #BFCF28;
 }
 
 header .nav {
@@ -55,6 +72,21 @@ body {
 .col-3 {
     min-width: 240px;
 }
+
+.dropdown-menu{
+    padding: 0;
+  }
+
+  .dropdown-menu ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    display: none;
+    z-index: 1050;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
 
 
 /* Für Chrome, Safari, Edge, Opera */
