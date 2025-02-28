@@ -3,15 +3,13 @@ $(document).ready(function() {
   // Aktualisiert die Ansicht, passt Button-Klassen, Überschrift und Tabellenstruktur an
   function updateView(view, $clickedButton) {
     // Button-Klassen anpassen: Alle zurück auf btn-primary, der geklickte Button auf btn-secondary
-    $("#dailyBtn, #weeklyBtn, #monthlyBtn").removeClass("btn-secondary").addClass("btn-primary");
+    $("#weeklyBtn, #monthlyBtn").removeClass("btn-secondary").addClass("btn-primary");
     $clickedButton.removeClass("btn-primary").addClass("btn-secondary");
 
     // Überschrift anpassen
     var headerText = "";
     var today = new Date();
-    if (view === "daily") {
-      headerText = "Tagesansicht - " + today.toLocaleDateString();
-    } else if (view === "weekly") {
+    if (view === "weekly") {
       var currentDay = today.getDay() || 7; // Sonntag als 7
       var monday = new Date(today);
       monday.setDate(today.getDate() - currentDay + 1);
@@ -33,41 +31,26 @@ $(document).ready(function() {
   function fillTableWithDummyData(view) {
     // Dummy-Daten mit Tag-Werten
     const dummyData = [
-      { tag: "24.02.2025", kostenstelle: "310", akkordMin: 30, gebrMin: 25, durchMin: 20, gesamtstunden: 8, perc10: 0.8, perc20: 1.6, perc40: 3.2 },
-      { tag: "24.02.2025", kostenstelle: "305", akkordMin: 40, gebrMin: 35, durchMin: 30, gesamtstunden: 7.5, perc10: 0.75, perc20: 1.5, perc40: 3.0 },
-      { tag: "25.02.2025", kostenstelle: "420", akkordMin: 50, gebrMin: 45, durchMin: 40, gesamtstunden: 8.5, perc10: 0.85, perc20: 1.7, perc40: 3.4 }
+      { kostenstelle: "310", akkordMin: 0.5, gebrMin: 0.45, durchMin: 0.33, gesamtstunden: 8, perc10: 0.8, perc25: 1.6, perc40: 3.2 },
+      { kostenstelle: "305", akkordMin: 0.6, gebrMin: 0.55, durchMin: 0.5, gesamtstunden: 7.5, perc10: 0.75, perc25: 1.5, perc40: 3.0 },
+      { kostenstelle: "420", akkordMin: 0.8, gebrMin: 0.75, durchMin: 0.66, gesamtstunden: 8.5, perc10: 0.85, perc25: 1.7, perc40: 3.4 }
     ];
 
     // Tabellenkopf anpassen: Bei weekly oder monthly die Spalte "Tag" einfügen
-    let headerHtml = "";
-    if (view === "daily") {
+    
       headerHtml = `
         <tr>
           <th scope="col">Kostenstelle</th>
+          <th scope="col">Lohnart</th>
           <th scope="col">Akkord Min.</th>
           <th scope="col">gebr. Min.</th>
           <th scope="col">durch. Min.</th>
           <th scope="col">Gesamtstunden</th>
           <th scope="col">10%</th>
-          <th scope="col">20%</th>
+          <th scope="col">25%</th>
           <th scope="col">40%</th>
         </tr>
       `;
-    } else {
-      headerHtml = `
-        <tr>
-          <th scope="col">Tag</th>
-          <th scope="col">Kostenstelle</th>
-          <th scope="col">Akkord Min.</th>
-          <th scope="col">gebr. Min.</th>
-          <th scope="col">durch. Min.</th>
-          <th scope="col">Gesamtstunden</th>
-          <th scope="col">10%</th>
-          <th scope="col">20%</th>
-          <th scope="col">40%</th>
-        </tr>
-      `;
-    }
     $("table thead").html(headerHtml);
 
     // Tabelle leeren und Dummy-Daten einfügen
@@ -75,46 +58,28 @@ $(document).ready(function() {
     $tableBody.empty();
     
     dummyData.forEach(function(row) {
-      let rowHtml = "";
-      if (view === "daily") {
+      let rowHtml = "";      
         rowHtml = `
           <tr>
             <td>${row.kostenstelle}</td>
+            <td contenteditable="true"></td>
             <td>${row.akkordMin}</td>
             <td>${row.gebrMin}</td>
             <td>${row.durchMin}</td>
             <td>${row.gesamtstunden}</td>
             <td>${row.perc10}</td>
-            <td>${row.perc20}</td>
+            <td>${row.perc25}</td>
             <td>${row.perc40}</td>
           </tr>
         `;
-      } else {
-        rowHtml = `
-          <tr>
-            <td>${row.tag}</td>
-            <td>${row.kostenstelle}</td>
-            <td>${row.akkordMin}</td>
-            <td>${row.gebrMin}</td>
-            <td>${row.durchMin}</td>
-            <td>${row.gesamtstunden}</td>
-            <td>${row.perc10}</td>
-            <td>${row.perc20}</td>
-            <td>${row.perc40}</td>
-          </tr>
-        `;
-      }
       $tableBody.append(rowHtml);
     });
   }
 
   // Standardmäßig die Tagesansicht aktivieren
-  updateView("daily", $("#dailyBtn"));
+  updateView("weekly", $("#wekklyBtn"));
 
   // Klick-Events für die Ansichts-Schaltflächen
-  $("#dailyBtn").click(function() {
-    updateView("daily", $(this));
-  });
   $("#weeklyBtn").click(function() {
     updateView("weekly", $(this));
   });

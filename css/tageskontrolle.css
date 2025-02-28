@@ -1,0 +1,18 @@
+/* Standard-CSS der Eingabemaske wird übernommen */
+/* Zusätzliche Regeln für den Kontrollmodus: */
+
+/* Readonly-Felder visuell absetzen */
+input[readonly] {
+    background-color: #e9ecef;
+  }
+  
+  /* Plus- und Minus-Buttons standardmäßig ausblenden (sind hier schon inline per style gesetzt) */
+  .tageskontrolle .btn-outline-secondary,
+  .tageskontrolle .btn-outline-danger {
+    /* Falls benötigt, kann hier auch über !important gearbeitet werden */
+    display: none;
+  }
+
+  .eingabemaske-row.approved {
+    border: 2px solid green !important;
+  }

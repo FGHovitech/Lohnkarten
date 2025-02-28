@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tageskontrolle</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/suedleder-color.css">
+  <link rel="stylesheet" href="./css/eingabemaske.css">
+  <link rel="stylesheet" href="./css/tageskontrolle.css">
+  <script defer src="./js/jquery.min.js"></script>
+  <script defer src="./js/bootstrap.bundle.min.js"></script>
+  <script defer src="./js/eingabemaske.js"></script>
+  <script defer src="./js/tageskontrolle.js"></script>
+</head>
+<body class="d-flex flex-column min-vh-100 tageskontrolle">
+  <!-- Header -->
+  <div class="container-fluid">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/tageskontrolle.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img class="logo" src="./pictures/Suedleder_Logo.svg" alt="Südleder Logo">
+        <span class="fs-4">Tageskontrolle</span>
+      </a>
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+      </ul>
+    </header>
+  </div>
+
+  <!-- Hauptinhalt (ähnlich wie bei der Eingabemaske) -->
+  <main class="container-fluid flex-grow-1">
+    <form>
+      <!-- Globaler Header (Spaltenüberschriften) -->
+      <div class="eingabemaske-global-header d-flex">
+        <div style="flex:2; text-align: center;">Mitarbeiter</div>
+        <div style="flex:10" class="d-flex">
+            <div style="flex:1; text-align: center;">Kostenstelle</div>
+            <div style="flex:3; text-align: center;">Nebenzeiten</div>
+            <div style="flex:6" class="d-flex">
+              <div style="flex:2; text-align: center;">Gewichtsklasse</div>
+              <div style="flex:1; text-align: center;">Stückzahl</div>
+              <div style="flex:1; text-align: center;">VGZ</div>
+              <div style="flex:1; text-align: center;">Akkord Min.</div>
+              <div style="flex:1; text-align: center;">Gebr. Min.</div>
+            </div>
+            <div style="flex:2; text-align: center;">Std. Zuschlag</div>
+        </div>
+      </div>
+      
+      <!-- Container für alle Zeilen -->
+      <div id="eingabemaske-container">
+        <!-- Eine Mitarbeiterzeile als Beispiel -->
+        <div class="eingabemaske-row border rounded p-2" style="background-color: #f8f9fa;">
+          <!-- Mitarbeiter-Spalte -->
+          <div class="employee-container" style="flex:2;">
+            <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow" data-bs-theme="light">
+              <form>
+                <!-- Eingabefeld zunächst readonly -->
+                <input type="search" class="form-control" autocomplete="off" placeholder="Mitarbeiter" readonly>
+              </form>
+              <ul class="list-unstyled mb-0" style="position: absolute; top: 100%; left: 0; width: 100%; display: none; z-index: 1050; background-color: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <li>
+                  <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
+                    <span class="d-inline-block bg-success rounded-circle p-1"></span>
+                    (5111) Peter Lustig
+                  </a>
+                </li>
+                <!-- Weitere Mitarbeiter... -->
+              </ul>
+            </div>
+            <!-- Statt "Mitarbeiter löschen" gibt es hier zwei Buttons -->
+            <div class="employee-actions" style="align-items: center;">
+              <div class="d-flex gesamtstunden-container">
+                <div class="gesamtStunden-text">Gesamtstunden:</div>
+                <input type="text" name="gesamtStunden" class="form-control" placeholder="Gesamt Std." readonly>
+              </div>
+              <div class="kontrolle-buttons mt-2">
+                <button type="button" class="btn btn-success btn-geprueft">Geprüft</button>
+                <button type="button" class="btn btn-primary btn-bearbeiten">Bearbeiten</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Innerer Container (Kostenstellen, Nebenzeiten etc.) -->
+          <div class="inner-container" style="flex:10;">
+            <div class="inner-section-wrapper">
+              <div class="eingabemaske-abschnitt">
+                <div class="d-flex w-100 gap-1">
+                  <!-- Kostenstelle -->
+                  <div style="flex:1;">
+                    <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow" data-bs-theme="light">
+                      <form>
+                        <input type="search" class="form-control" autocomplete="off" placeholder="Kostenstelle" readonly>
+                      </form>
+                      <ul class="list-unstyled mb-0" style="position: absolute; top: 100%; left: 0; width: 100%; display: none;">
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">310</a></li>
+                        <!-- Weitere Optionen... -->
+                      </ul>
+                    </div>
+                    <div class="cost-center-actions mt-1">
+                      <button type="button" class="btn btn-outline-danger minus-inner-section" style="display:none;">-</button>
+                    </div>
+                  </div>
+                  
+                  <!-- Nebenzeiten -->
+                  <div style="flex:3;">
+                    <div class="nebenzeiten-group">
+                      <div class="d-flex input-group mb-1 nebenzeiten-row">
+                        <div class="nebenzeitenDropdown dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow" data-bs-theme="light">
+                          <form>
+                            <input type="search" class="form-control" autocomplete="off" placeholder="Nebenzeit" readonly>
+                          </form>
+                          <ul class="list-unstyled mb-0" style="position: absolute; top: 100%; left: 0; width: 100%; display: none;">
+                            <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Vorgang 1</a></li>
+                            <!-- Weitere Vorgänge... -->
+                          </ul>
+                        </div>
+                        <input type="number" name="nebenzeiten_number[]" class="form-control minutenEingabe" placeholder="Minuten" readonly>
+                      </div>
+                      <div>
+                        <!-- Plus- und Minus-Buttons zunächst versteckt -->
+                        <button type="button" class="btn btn-outline-secondary add-nebenzeiten" style="display:none;">+</button>
+                        <button type="button" class="btn btn-outline-danger minus-nebenzeiten" style="display:none;">-</button>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <!-- Gruppe: Gewichtsklasse, Stückzahl, VGZ, Akkord- und Gebraucht-Minuten -->
+                  <div class="gewichtsklasse-group" style="flex:6;">
+                    <div class="d-flex gap-1 gewichtsklasse-row mb-1">
+                      <div style="flex:2;">
+                        <div class="dropdown-menu d-block position-relative pt-0 mx-0 rounded-3 shadow" data-bs-theme="light">
+                          <form>
+                            <input type="search" class="form-control" autocomplete="off" placeholder="Gewichtsklasse" readonly>
+                          </form>
+                          <ul class="list-unstyled mb-0" style="position: absolute; top: 100%; left: 0; width: 100%; display: none; z-index: 1050; background-color: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">Bitte wählen</a></li>
+                            <!-- Weitere Gewichtsklassen... -->
+                          </ul>
+                        </div>
+                      </div>
+                      <div style="flex:1;">
+                        <input type="number" name="stueckzahl[]" class="form-control" placeholder="Stückzahl" readonly>
+                      </div>
+                      <div style="flex:1;">
+                        <input type="text" name="vgz[]" class="form-control" placeholder="VGZ" readonly>
+                      </div>
+                      <div style="flex:1;">
+                        <input type="number" name="akkordMinuten[]" class="form-control" placeholder="Akkordmin." readonly>
+                      </div>
+                      <div style="flex:1;">
+                        <input type="number" name="gebrauchteMinuten[]" class="form-control" placeholder="Gebr.Min." readonly>
+                      </div>
+                    </div>
+                    <div>
+                      <button type="button" class="btn btn-outline-secondary add-gewichtsklasse" style="display:none;">+</button>
+                      <button type="button" class="btn btn-outline-danger minus-gewichtsklasse" style="display:none;">-</button>
+                    </div>
+                  </div>
+  
+                  <div class="stunden-group" style="flex:2">
+                    <div class="d-flex gap-1">
+                      <input type="number" name="stundenzuschlag_10[]" class="form-control" placeholder="10%" readonly>
+                      <input type="number" name="stundenzuschlag_25[]" class="form-control" placeholder="25%" readonly>
+                      <input type="number" name="stundenzuschlag_40[]" class="form-control" placeholder="40%" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Hier kein Button für neuen Mitarbeiter -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer class="container mt-auto">
+    <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <div class="col-md-4 d-flex align-items-center">
+        <span class="mb-3 mb-md-0 text-body-secondary">© 2025 Südleder</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
