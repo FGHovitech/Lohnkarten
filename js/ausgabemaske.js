@@ -27,6 +27,54 @@ $(document).ready(function() {
     fillTableWithDummyData(view);
   }
 
+  // Standardmäßig die Tagesansicht aktivieren
+  updateView("weekly", $("#wekklyBtn"));
+
+  // Klick-Events für die Ansichts-Schaltflächen
+  $("#weeklyBtn").click(function() {
+    updateView("weekly", $(this));
+  });
+  $("#monthlyBtn").click(function() {
+    updateView("monthly", $(this));
+  });
+
+  $("#printBtn").click(function() {
+    // Kombinieren der Überschrift und der Tabelle
+    var printContents = "";
+    $(".header-container, table").each(function() {
+      printContents += this.outerHTML;
+    });
+    
+    // Erstelle ein neues Fenster
+    var printWindow = window.open('', '', 'height=600,width=800');
+    
+    // Schreibe den HTML-Inhalt inklusive CSS in das neue Fenster
+    printWindow.document.write('<html><head><title>Druckansicht</title>');
+    printWindow.document.write('<link rel="stylesheet" href="./css/bootstrap.min.css">');
+    printWindow.document.write('<style>');
+    printWindow.document.write('@media print {');
+    printWindow.document.write('  table { border-collapse: collapse; }');
+    printWindow.document.write('  table, th, td { border: 1px solid #000 !important; }');
+    printWindow.document.write('}');
+    printWindow.document.write('</style>');
+    printWindow.document.write('</head><body>');
+    printWindow.document.write(printContents);
+    printWindow.document.write('</body></html>');
+    
+    printWindow.document.close();
+    printWindow.focus();
+    
+    // Druckdialog öffnen
+    printWindow.print();
+    
+    // Fenster schließen, wenn der Druckdialog beendet ist
+    printWindow.close();
+  });
+  
+  
+  
+});
+
   // Füllt die Tabelle (#tableBody) mit Dummy-Daten und passt den Tabellenkopf an
   function fillTableWithDummyData(view) {
     // Dummy-Daten mit Tag-Werten
@@ -75,19 +123,6 @@ $(document).ready(function() {
       $tableBody.append(rowHtml);
     });
   }
-
-  // Standardmäßig die Tagesansicht aktivieren
-  updateView("weekly", $("#wekklyBtn"));
-
-  // Klick-Events für die Ansichts-Schaltflächen
-  $("#weeklyBtn").click(function() {
-    updateView("weekly", $(this));
-  });
-  $("#monthlyBtn").click(function() {
-    updateView("monthly", $(this));
-  });
-});
-
 
   // Dropdown-Funktionalität (übernommen aus der Eingabemaske)
   
