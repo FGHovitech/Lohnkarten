@@ -39,13 +39,20 @@ $(document).ready(function() {
   });
 
   $("#printBtn").click(function() {
-    // Kombinieren der Überschrift und der Tabelle
-    var printContents = "";
+    // Hole den ausgewählten Mitarbeiter aus dem Suchfeld
+    var selectedEmployee = $(".employee-container input[type='search']").val();
+    var employeeInfo = "";
+    if (selectedEmployee) {
+      employeeInfo = "<div class='employee-info'><h3>Mitarbeiter: " + selectedEmployee + "</h3></div>";
+    }
+    
+    // Kombiniere den Mitarbeiter, die Überschrift und die Tabelle
+    var printContents = employeeInfo;
     $(".header-container, table").each(function() {
       printContents += this.outerHTML;
     });
     
-    // Erstelle ein neues Fenster
+    // Erstelle ein neues Fenster für die Druckansicht
     var printWindow = window.open('', '', 'height=600,width=800');
     
     // Schreibe den HTML-Inhalt inklusive CSS in das neue Fenster
@@ -64,14 +71,13 @@ $(document).ready(function() {
     printWindow.document.close();
     printWindow.focus();
     
-    // Druckdialog öffnen
+    // Öffne den Druckdialog
     printWindow.print();
     
-    // Fenster schließen, wenn der Druckdialog beendet ist
+    // Schließe das Fenster nach dem Drucken
     printWindow.close();
   });
-  
-  
+
   
 });
 
